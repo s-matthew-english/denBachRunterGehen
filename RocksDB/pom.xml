@@ -28,8 +28,16 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!-- end::junit[] -->
+        <!-- tag::rocksdb[] -->
+        <dependency>
+            <groupId>org.rocksdb</groupId>
+            <artifactId>rocksdbjni</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+        <!-- end::rocksdb[] -->
     </dependencies>
-    <!-- end::[] -->
+
     <build>
         <plugins>
             <plugin>
