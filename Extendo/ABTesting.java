@@ -4,6 +4,8 @@ public class ABTesting {
     A b = new B(666);
     
     System.out.println(b.toString());
+
+    b.method();
   }
 
 }
