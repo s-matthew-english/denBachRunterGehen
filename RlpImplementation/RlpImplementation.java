@@ -11,8 +11,9 @@ public class RlpImplementation {
     // String hex = DatatypeConverter.printHexBinary(bytes);
     // System.out.println(hex); // prints "7F0F00"
 
-    System.out.println(encodeRlp("S"));
-
+    // 131SME
+    // ^maybe that's correct, but not Hex encoded...
+    System.out.println(encodeRlp("dog"));
   }
 
 
@@ -23,22 +24,27 @@ public class RlpImplementation {
       return String.valueOf(0);
     } else {
       int component0 = Integer.parseInt(toBinary((int)(inputLength / 256)));
-      char component1 = (char)(inputLength % 256);
-      int  component = component0 + ((int)component1);
-      char returnValue = (char)component; // cast from int to char
-      return String.valueOf(returnValue);
+      int component1 = inputLength % 256;
+      int  component = component0 + component1;
+
+      String returnValue = Integer.toHexString(component);
+
+      return returnValue;
     }
   }
 
   public static String encodeLength(int inputLength, int offset) {
     if (inputLength < 56) {
-      return String.valueOf(inputLength + offset);
+      String returnValue = Integer.toHexString(inputLength + offset);
+      //System.out.println(returnValue);
+      return returnValue;
     }
     if (inputLength < java.lang.Math.pow(256,8)) {
       String binaryValue = toBinary(inputLength);
       int binaryLength = binaryValue.length();
       int composite = binaryLength + offset + 55;
-      char returnComponent = (char)composite;
+
+      String returnComponent = Integer.toHexString(composite);
       String returnFinal = returnComponent + binaryValue;
       return returnFinal;
     } else {
@@ -54,18 +60,15 @@ public class RlpImplementation {
     }
     return encodeLength(input.length(), 128) + input;
   }
-
-  public static String encodeRlpList(ArrayList<String> input) {
-
-    String output = encodeLength(input.length(), 192);
-
-    for (String element : input) {
-      output += encodeRlp(element);
-    }
-    return output;
-  }
-
 }
+
+// public static String encodeRlpList(ArrayList<String> input) {
+//   String output = encodeLength(input.length(), 192);
+//   for (String element : input) {
+//     output += encodeRlp(element);
+//   }
+//   return output;
+// }
 
 
 
