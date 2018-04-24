@@ -7,13 +7,11 @@ public class RlpImplementation {
 
     //String example = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
     // byte[] bytes = example.getBytes();
+    ArrayList<String> input = new ArrayList<>();
 
-    // String hex = DatatypeConverter.printHexBinary(bytes);
-    // System.out.println(hex); // prints "7F0F00"
-
-    // 131SME
-    // ^maybe that's correct, but not Hex encoded...
-    System.out.println(encodeRlp("dog"));
+    input.add("cat");
+    input.add("dog");
+    System.out.println(encodeRlp(input));
   }
 
 
@@ -60,15 +58,20 @@ public class RlpImplementation {
     }
     return encodeLength(input.length(), 128) + input;
   }
+
+  // This is dope- overloaded method...
+  public static String encodeRlp(ArrayList<String> input) {
+    System.out.println(java.util.Arrays.toString(input.toArray()));
+    String output = encodeLength(input.size(), 192);
+    for (String element : input) {
+      output += encodeRlp(element);
+    }
+    return output;
+  }
+
 }
 
-// public static String encodeRlpList(ArrayList<String> input) {
-//   String output = encodeLength(input.length(), 192);
-//   for (String element : input) {
-//     output += encodeRlp(element);
-//   }
-//   return output;
-// }
+
 
 
 
