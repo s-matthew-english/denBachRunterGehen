@@ -7,11 +7,19 @@ public class RlpImplementation {
 
     //String example = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
     // byte[] bytes = example.getBytes();
+    // ArrayList<ArrayList<String>> input0 = new ArrayList<>();
     ArrayList<String> input = new ArrayList<>();
+
+    //01, 02, [[03, 04],[05]]
+
+    // input0.add()
 
     input.add("cat");
     input.add("dog");
+
     System.out.println(encodeRlp(input));
+
+    RlpImplementation.RlpElement blah = new RlpImplementation().new RlpElement("quite no");
   }
 
 
@@ -68,6 +76,19 @@ public class RlpImplementation {
     }
     return output;
   }
+
+   class RlpElement {
+
+      Boolean isList = false;
+
+      RlpElement(Object inputObject) {
+        if (inputObject instanceof ArrayList<?>) {
+          isList = true
+          System.out.println("quite yeah!");
+        }
+      }
+
+   }
 
 }
 
