@@ -1,6 +1,8 @@
 import java.util.*;
 import java.lang.*;
 import javax.xml.bind.DatatypeConverter;
+import java.util.Arrays;
+import java.util.List;
 
 public class RlpImplementation {
   public static void main(String[] args) {
@@ -8,7 +10,7 @@ public class RlpImplementation {
     //String example = "Lorem ipsum dolor sit amet, consectetur adipisicing elit";
     // byte[] bytes = example.getBytes();
     // ArrayList<ArrayList<String>> input0 = new ArrayList<>();
-    ArrayList<String> input = new ArrayList<>();
+    ArrayList<Object> input = new ArrayList<>();
 
     //01, 02, [[03, 04],[05]]
 
@@ -17,9 +19,10 @@ public class RlpImplementation {
     input.add("cat");
     input.add("dog");
 
-    System.out.println(encodeRlp(input));
+    //System.out.println(unpackList(input));
+    System.out.println("dog");
 
-    RlpImplementation.RlpElement blah = new RlpImplementation().new RlpElement("quite no");
+    //RlpImplementation.RlpElement blah = new RlpImplementation().new RlpElement("quite no");
   }
 
 
@@ -61,6 +64,7 @@ public class RlpImplementation {
 
 
   public static String encodeRlp(String input) {
+System.out.println("oioioi");
     if (input.length() == 1 && (int)input.charAt(0) < 128) {
       return input;
     }
@@ -68,29 +72,76 @@ public class RlpImplementation {
   }
 
   // This is dope- overloaded method...
-  public static String encodeRlp(ArrayList<String> input) {
-    System.out.println(java.util.Arrays.toString(input.toArray()));
+  public static String encodeRlp(Object xinput) {
+     
+    //System.out.println(java.util.Arrays.toString(input.toArray()));
+
+    ArrayList<Object> input = cast(xinput);
+
     String output = encodeLength(input.size(), 192);
-    for (String element : input) {
+
+    for (Object element : input) {
+      if (!(element instanceof ArrayList<?>)) {
+        output += encodeRlp((String)element);
+      }
       output += encodeRlp(element);
     }
     return output;
   }
 
-   class RlpElement {
 
-      Boolean isList = false;
+@SuppressWarnings("unchecked")
+public static <T extends List<?>> T cast(Object obj) {
+    return (T) obj;
+}
 
-      RlpElement(Object inputObject) {
-        if (inputObject instanceof ArrayList<?>) {
-          isList = true
-          System.out.println("quite yeah!");
-        }
+
+  public static String unpackList(Object xinput) {
+    String output = "";
+
+    if (xinput instanceof ArrayList<?>) {
+      ArrayList<Object> input = cast(xinput);
+      for (Object element : input) {
+        output += encodeLength(input.size(), 192);
+        output += encodeRlp(element);
+        unpackList(input);
       }
+    }
 
-   }
+    return encodeRlp(xinput);
+  }
+
 
 }
+
+
+
+
+  //  class RlpElement {
+
+  //     Boolean isList = false;
+  //     String str = null;
+
+  //     RlpElement(Object inputObject) {
+
+
+  //       inputObject
+  //     }
+
+  //     unpackList(ArrayList<Object> inputList) {
+  //       for (Object element : inputList) {
+  //         if (inputObject instanceof ArrayList<?>) {
+  //           String output = encodeLength(input.size(), 192);
+  //           output += encodeRlp((String)element);
+  //           unpackList(inputList);
+  //         }
+  //         encodeRlp((String)element);
+  //       }
+  //     }
+
+  // }
+
+
 
 
 
