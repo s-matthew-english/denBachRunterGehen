@@ -8,7 +8,7 @@ public class RlpImpl {
     System.out.println("oh yeah...");
 
 
-    //<[ 00 01, 02, [[03, 04],[05]] ]>
+    //<[ 00, 01, 02, [[03, 04],[05]]]>
     ArrayList<Object> data0 = new ArrayList<>();
     data0.add("00");
     data0.add("01");
@@ -21,13 +21,16 @@ public class RlpImpl {
     ArrayList<Object> data2 = new ArrayList<>();
     data2.add("05");
 
+    ArrayList<Object> data3 = new ArrayList<>();
+    data3.add(data1);
+    data3.add(data2);
 
-    data1.add(data2);
-    data0.add(data1);
+    data0.add(data3);
 
     String input = "";
+    int iteration = 0;
 
-    System.out.println(recursiveParse(data0, input));
+    System.out.println(recursiveParse(data0, input, iteration));
   }
 
 
@@ -47,22 +50,11 @@ public class RlpImpl {
   }
 
   public static String encodeLength(int inputLength, int offset) {
+    String returnValue = "";
     if (inputLength < 56) {
-      String returnValue = Integer.toHexString(inputLength + offset);
-      return returnValue;
+      returnValue += Integer.toHexString(inputLength + offset);
     }
-    if (inputLength < java.lang.Math.pow(256,8)) {
-      String binaryValue = toBinary(inputLength);
-      int binaryLength = binaryValue.length();
-      int composite = binaryLength + offset + 55;
-
-      String returnComponent = Integer.toHexString(composite);
-      String returnFinal = returnComponent + binaryValue;
-      return returnFinal;
-    } else {
-      System.out.println("input too long");
-      return "";
-    }
+    return returnValue + " ";
   }
 
   public static String encodeRlp(String input) {
@@ -72,15 +64,28 @@ public class RlpImpl {
     return encodeLength(input.length(), 128) + input;
   }
 
-  public static String recursiveParse(ArrayList<Object> input, String output) {
+  public static String recursiveParse(ArrayList<Object> input, String output, int iteration) {
+    if (iteration == 0){
+      output += encodeLength(input.size(), 192);
+      System.out.println(Arrays.toString(input.toArray()));
+      iteration++;
+    }
+
     for(Object curInstance : input) {
 
       if (curInstance instanceof ArrayList<?>) {
-        output += encodeLength(input.size(), 192);
-        output += recursiveParse(cast(curInstance), output);
+
+        ArrayList<Object> converted = cast(curInstance);
+        if( converted.size() == 1) {
+          System.out.println("arp ");
+          output += encodeRlp(curInstance.toString());
+        }
+        output += encodeLength(converted.size(), 192);
+        output += recursiveParse(converted, output, iteration);
         break;
       }
 
+      System.out.println("value: " + curInstance);
       output += encodeRlp(curInstance.toString());
     }
     return output;
@@ -91,3 +96,8 @@ public class RlpImpl {
       return (T) obj;
   }
 }
+
+
+
+
+
