@@ -64,7 +64,7 @@ public class RlpImplementation {
 
 
   public static String encodeRlp(String input) {
-System.out.println("oioioi");
+    System.out.println("oioioi");
     if (input.length() == 1 && (int)input.charAt(0) < 128) {
       return input;
     }
