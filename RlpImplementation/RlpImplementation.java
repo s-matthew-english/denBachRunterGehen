@@ -19,8 +19,8 @@ public class RlpImplementation {
     input.add("cat");
     input.add("dog");
 
-    //System.out.println(unpackList(input));
-    System.out.println("dog");
+    System.out.println(unpackList(input));
+    //System.out.println("dog");
 
     //RlpImplementation.RlpElement blah = new RlpImplementation().new RlpElement("quite no");
   }
