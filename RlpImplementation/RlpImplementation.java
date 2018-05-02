@@ -63,31 +63,7 @@ public class RlpImplementation {
   }
 
 
-  public static String encodeRlp(String input) {
-    System.out.println("oioioi");
-    if (input.length() == 1 && (int)input.charAt(0) < 128) {
-      return input;
-    }
-    return encodeLength(input.length(), 128) + input;
-  }
 
-  // This is dope- overloaded method...
-  public static String encodeRlp(Object xinput) {
-     
-    //System.out.println(java.util.Arrays.toString(input.toArray()));
-
-    ArrayList<Object> input = cast(xinput);
-
-    String output = encodeLength(input.size(), 192);
-
-    for (Object element : input) {
-      if (!(element instanceof ArrayList<?>)) {
-        output += encodeRlp((String)element);
-      }
-      output += encodeRlp(element);
-    }
-    return output;
-  }
 
 
 @SuppressWarnings("unchecked")

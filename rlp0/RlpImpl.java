@@ -36,7 +36,11 @@ public class RlpImpl {
     // System.out.println(input0.toString());
 
 
-    System.out.println(pr(input));
+    //System.out.println(pr(input));
+
+    System.out.println(pr(encodeRlp(new byte[] {0x01, 0x02})));
+
+    //System.out.println(DatatypeConverter.printHexBinary((encodeRlp(new byte[] {0x01,0x02}))));
 
     // System.out.println(Arrays.toString("1".getBytes()));
 
@@ -63,6 +67,10 @@ public class RlpImpl {
     return output;
   }
 
+  @SuppressWarnings("unchecked")
+  public static <T extends List<?>> T cast(Object obj) {
+      return (T) obj;
+  }
 
   public static String encode(Object xinput) {
 
@@ -83,11 +91,6 @@ public class RlpImpl {
     }
   }
 
-  @SuppressWarnings("unchecked")
-  public static <T extends List<?>> T cast(Object obj) {
-      return (T) obj;
-  }
-
   public static String toBinary(int inputLength) {
     if (inputLength == 0) {
       return String.valueOf(0);
@@ -100,6 +103,55 @@ public class RlpImpl {
 
       return returnValue;
     }
+  }
+
+  public static String encodeLength(int inputLength, int offset) {
+    if (inputLength < 56) {
+      String returnValue = Integer.toHexString(inputLength + offset);
+      //System.out.println(returnValue);
+      return returnValue;
+    }
+    if (inputLength < java.lang.Math.pow(256,8)) {
+      String binaryValue = toBinary(inputLength);
+      int binaryLength = binaryValue.length();
+      int composite = binaryLength + offset + 55;
+
+      String returnComponent = Integer.toHexString(composite);
+      String returnFinal = returnComponent + binaryValue;
+      return returnFinal;
+    } else {
+      System.out.println("input too long");
+      return "";
+    }
+  }
+
+  // encode payload
+  public static byte[] encodeRlp(byte[] input) {
+    if (input.length == 1 && input[0] < 128) {
+      return input;
+    }
+    // format payload...
+    String value = DatatypeConverter.printHexBinary(input);
+    //System.out.println(value);
+    value = encodeLength(input.length, 128) + value;
+    //System.out.println(value);
+    return DatatypeConverter.parseHexBinary(value);
+  }
+
+  // encode list
+  public static String encodeRlp(Object xinput) {
+
+    ArrayList<Object> input = cast(xinput);
+
+    String output = encodeLength(input.size(), 192);
+
+    for (Object element : input) {
+      if (!(element instanceof ArrayList<?>)) {
+        output += encodeRlp((String)element);
+      }
+      output += encodeRlp(element);
+    }
+    return output;
   }
 
 }
