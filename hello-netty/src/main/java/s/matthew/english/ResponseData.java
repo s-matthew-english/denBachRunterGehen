@@ -10,4 +10,8 @@ public class ResponseData {
   public void setIntValue(int intValue) {
     this.intValue = intValue;
   }
+
+  public String toString() {
+    return Integer.toString(intValue);
+  }
 }

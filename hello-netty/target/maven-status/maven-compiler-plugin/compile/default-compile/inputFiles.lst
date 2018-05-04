@@ -1,6 +1,10 @@
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/RequestDecoder.java
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/RequestData.java
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/ProcessingHandler.java
+/Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/NettyClient.java
+/Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/ResponseDataDecoder.java
+/Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/ClientHandler.java
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/ResponseData.java
+/Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/RequestDataEncoder.java
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/NettyServer.java
 /Users/s.matthew.english/ConsenSys/PegaSys/workbench/java/DenBachRunterGehen/hello-netty/src/main/java/s/matthew/english/ResponseDataEncoder.java
