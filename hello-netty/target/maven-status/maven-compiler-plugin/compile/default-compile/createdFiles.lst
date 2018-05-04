@@ -1,1 +1,7 @@
+s/matthew/english/NettyServer$1.class
+s/matthew/english/ProcessingHandler.class
+s/matthew/english/ResponseDataEncoder.class
 s/matthew/english/NettyServer.class
+s/matthew/english/ResponseData.class
+s/matthew/english/RequestDecoder.class
+s/matthew/english/RequestData.class
