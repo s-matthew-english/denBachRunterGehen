@@ -20,3 +20,4 @@ public class RequestData {
     this.stringValue = stringValue;
   }
 }
+

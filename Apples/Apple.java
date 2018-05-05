@@ -6,9 +6,9 @@ public class Apple extends Object {
 
   String colour;
   String name;
-  int weight;
+  Integer weight;
 
-  Apple(String colour, String name, int weight) {
+  Apple(String colour, String name, Integer weight) {
     this.colour = colour;
     this.name = name;
     this.weight = weight;
@@ -18,7 +18,7 @@ public class Apple extends Object {
     return colour;
   }
 
-  int getWeight() {
+  Integer getWeight() {
     return weight;
   }
 
